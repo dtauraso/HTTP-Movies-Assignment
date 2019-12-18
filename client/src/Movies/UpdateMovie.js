@@ -16,7 +16,7 @@ const UpdateMovie = props => {
     const itemToEdit = props.movies.find(
       e => `${e.id}` === props.match.params.id
     );
-    console.log(props.movies, itemToEdit);
+    console.log(props.movies, "item to edit", itemToEdit);
     // prevent useEffect from racing the one in
     if (itemToEdit) {
       setItem(itemToEdit);
@@ -40,15 +40,15 @@ const UpdateMovie = props => {
     e.preventDefault();
     // make a PUT request to edit the item
     axios
-      .put(`http://localhost:5000/api/movies/${props.match.params.id}`, item)
+      .put(`http://localhost:5000/api/movies/${item.id}`, item)
       .then(res => {
         // res.data ==> full array with updated item
         // usually APIs return just the updated item, or just the id of the update item - you need to make a new array with all the old items, and replace the updated item with the updated item
         // const newItemsArr = props.items.map
         console.log("updated", res)
-        // res should have a set of movies
+
         setItem(res.data);
-        props.history.push(`/movies/${props.match.params.id}`);
+        props.history.push(`/movies/${item.id}`);
       })
       .catch(err => console.log(err));
   };

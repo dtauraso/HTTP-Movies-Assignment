@@ -30,7 +30,52 @@ export default class Movie extends React.Component {
     const addToSavedList = this.props.addToSavedList;
     addToSavedList(this.state.movie);
   };
+  componentDidUpdate(prevProps) {
+    console.log("item was updated", prevProps)
+    // Typical usage (don't forget to compare props):
+    if (this.props.userID !== prevProps.userID) {
+      // this.fetchData(this.props.userID);
+    }
+  }
+  deleteMovie = (e, id) => {
+    e.preventDefault();
+    console.log(id)
+    axios
+      .delete(`http://localhost:5000/api/movies/${this.props.match.params.id}`)
+      .then(res => {
+        // have to reload the page
+        console.log("deleted result", res.data)
 
+        // console.log(this.props.match.params.id)
+        // console.log(this.props.savedList)
+        // let x = this.props.savedList
+        // let i = 0
+        // let newList = []
+        // while(i < x.length) {
+        //   if(x.id !== this.props.match.params.id) {
+        //     newList.push(x[i])
+        //   }
+        // }
+        // this.props.savedList.forEach(savedMovie => {
+        //   console.log(savedMovie.id, this.props.match.params.id, savedMovie.id === this.props.match.params.id)
+        // })
+        // console.log(newList)
+        // console.log(x.filter(savedMovie => savedMovie.id < this.props.match.params.id))
+        // this.props.match.params.id is a string and savedMovie.id is an int
+        this.props.setSavedList(
+            this.props.savedList.filter(savedMovie => savedMovie.id !== parseInt(this.props.match.params.id)))
+        // this.props.setSavedList(newList)
+        // console.log("delete saved list", this.props.savedList)
+        this.props.updateMovies(res.data)
+        // this.setState({movie: null})
+        this.props.history.push(`/`);
+
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+  }
   render() {
     if (!this.state.movie) {
       return <div>Loading movie information...</div>;
@@ -47,6 +92,11 @@ export default class Movie extends React.Component {
           this.props.history.push(`/update-movie/${this.state.movie.id}`);
         }}>
         Edit
+      </button>
+      <button className="md-button" onClick={(e) => {
+        this.deleteMovie(e, this.state.movie.id)
+        }}>
+        Delete
       </button>
       </div>
     );
