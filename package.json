@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node server.js"
   },
+  "builds": [{ "src": "project-name/package.json", "use": "@now/static-build", "config": {"distDir": "build"} }],
+
   "repository": {
     "type": "git",
     "url": "git+https://github.com/LambdaSchool/SPA-Routing-React"
