@@ -48,14 +48,6 @@ export default class Movie extends React.Component {
 
         // console.log(this.props.match.params.id)
         // console.log(this.props.savedList)
-        // let x = this.props.savedList
-        // let i = 0
-        // let newList = []
-        // while(i < x.length) {
-        //   if(x.id !== this.props.match.params.id) {
-        //     newList.push(x[i])
-        //   }
-        // }
         // this.props.savedList.forEach(savedMovie => {
         //   console.log(savedMovie.id, this.props.match.params.id, savedMovie.id === this.props.match.params.id)
         // })

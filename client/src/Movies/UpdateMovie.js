@@ -5,7 +5,7 @@ const initialItem = {
     title : '',
     director: '',
     metascore: '',
-    stars: ''
+    stars: []
 };
 
 const UpdateMovie = props => {
@@ -36,6 +36,19 @@ const UpdateMovie = props => {
     });
   };
 
+  const changeStarHandler = (ev, ix) => {
+    ev.persist();
+    let value = ev.target.value;
+    // if (ev.target.name === 'price') {
+    //   value = parseInt(value, 10);
+    // }
+    let x = [...item.stars].filter((item, i) => i !== ix)
+    setItem({
+      ...item,
+      stars: [...x, value]
+    });
+  };
+
   const handleSubmit = e => {
     e.preventDefault();
     // make a PUT request to edit the item
@@ -53,6 +66,7 @@ const UpdateMovie = props => {
       .catch(err => console.log(err));
   };
 
+    console.log("item", item)
   return (
     <div>
       <h2>Update Item</h2>
@@ -88,13 +102,15 @@ stars */}
         />
         <div className="baseline" />
 
-        <input
-          type="number"
-          name="stars"
-          onChange={changeHandler}
-          placeholder="Stars"
-          value={item.stars}
-        />
+        {item.stars.map((star, i) => (
+                 
+                <input
+                    type="text"
+                    name="stars"
+                    onChange={(e) => changeStarHandler(e, i)}
+                    placeholder="Stars"
+                    value={star} />
+            ))}
 
 
         <div className="baseline" />
